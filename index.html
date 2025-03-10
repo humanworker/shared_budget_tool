@@ -1,0 +1,2462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Rich Life Together</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #0284c7;
+            --primary-hover: #0369a1;
+            --background-card: #f0f9ff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --border-color: rgba(148, 163, 184, 0.2);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --radius-lg: 16px;
+            --radius-md: 8px;
+            --radius-sm: 6px;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            
+            /* Type colors */
+            --color-uncategorized: #94a3b8;
+            --color-fixed: #4b5563;
+            --color-investments: #3b82f6;
+            --color-savings: #10b981;
+            --color-guilt-free: #f59e0b;
+            --color-personal: #8b5cf6;
+            
+            /* Background colors for category rows */
+            --bg-uncategorized: rgba(148, 163, 184, 0.1);
+            --bg-fixed: rgba(75, 85, 99, 0.08);
+            --bg-investments: rgba(59, 130, 246, 0.08);
+            --bg-savings: rgba(16, 185, 129, 0.08);
+            --bg-guilt-free: rgba(245, 158, 11, 0.08);
+            
+            /* Scenario colors */
+            --color-safe: #ef4444;  /* Red */
+            --color-typical: #10b981; /* Green */
+            --color-optimistic: #3b82f6; /* Blue */
+            
+            /* Life stage colors */
+            --color-young: #60a5fa;
+            --color-family: #f97316;
+            --color-empty: #8b5cf6;
+            --color-retire: #ec4899;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8fafc;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            padding: var(--spacing-lg);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .main-container {
+            display: flex;
+            gap: var(--spacing-xl);
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 0;
+        }
+
+        .flow-container {
+            background: var(--background-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            flex: 1;
+            box-shadow: var(--shadow-md);
+            margin-right: 324px;
+            border: 1px solid var(--border-color);
+            transition: box-shadow 0.2s ease;
+        }
+
+        .flow-container:hover {
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+            width: 300px;
+            position: fixed;
+            right: max(40px, calc((100% - 1200px) / 2 + 20px));
+            top: var(--spacing-lg);
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) transparent;
+        }
+
+        .right-column::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .right-column::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .right-column::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 20px;
+        }
+
+        .personal-summary, .versions-section, .notes-section, .projections-section {
+            background: var(--background-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: box-shadow 0.2s ease;
+        }
+
+        .personal-summary:hover, .versions-section:hover, .notes-section:hover, .projections-section:hover {
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-xl);
+            gap: var(--spacing-lg);
+        }
+
+        .income-section {
+            flex: 1;
+            padding: 0 var(--spacing-sm);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .income-section div {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Type breakdown bar styles */
+        .type-breakdown-container {
+            margin-bottom: var(--spacing-xl);
+            background: white;
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .type-breakdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .type-breakdown-title {
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .type-breakdown-bar {
+            display: flex;
+            height: 30px;
+            width: 100%;
+            overflow: hidden;
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .type-bar-segment {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 30px;
+        }
+
+        .type-breakdown-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            margin-right: var(--spacing-xs);
+        }
+
+        .type-uncategorized { background-color: var(--color-uncategorized); }
+        .type-fixed { background-color: var(--color-fixed); color: white; }
+        .type-investments { background-color: var(--color-investments); color: white; }
+        .type-savings { background-color: var(--color-savings); color: white; }
+        .type-guilt-free { background-color: var(--color-guilt-free); color: white; }
+        .type-personal { background-color: var(--color-personal); color: white; }
+
+        /* Category row background colors based on type */
+        .category-row.bg-uncategorized { background-color: var(--bg-uncategorized); }
+        .category-row.bg-fixed { background-color: var(--bg-fixed); }
+        .category-row.bg-investments { background-color: var(--bg-investments); }
+        .category-row.bg-savings { background-color: var(--bg-savings); }
+        .category-row.bg-guilt-free { background-color: var(--bg-guilt-free); }
+
+        .ramit-recommendations {
+            margin-top: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .ramit-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .ramit-content {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+        
+        /* Pill style for Ramit recommendations */
+        .recommendation-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .categories-section {
+            padding-top: var(--spacing-lg);
+        }
+
+        .total {
+            font-size: 1.25rem;
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md);
+            font-weight: 600;
+            color: var(--primary-color);
+            background: rgba(2, 132, 199, 0.1);
+            border-radius: var(--radius-md);
+        }
+
+        .category-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: var(--spacing-xs) 0;
+            padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        .category-row.dragging {
+            opacity: 0.5;
+            border: 2px dashed var(--primary-color);
+        }
+
+        .category-row.drop-target {
+            border-top: 2px solid var(--primary-color);
+        }
+        
+        .category-row:hover {
+            background-color: inherit;
+            transform: translateY(-1px);
+        }
+
+        .category-left {
+            display: flex;
+            align-items: center;
+            width: 150px;
+        }
+        
+        .drag-handle {
+            cursor: grab;
+            margin-right: var(--spacing-sm);
+            color: var(--text-secondary);
+            opacity: 0.5;
+            transition: opacity 0.2s ease;
+        }
+        
+        .category-row:hover .drag-handle {
+            opacity: 1;
+        }
+
+        .category-middle {
+            flex: 0.8;
+            padding: 0 var(--spacing-lg);
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .category-type-select {
+            min-width: 140px;
+            background-color: white;
+        }
+
+        .delete-btn {
+            visibility: hidden;
+            background: none;
+            border: none;
+            padding: var(--spacing-xs);
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            margin-right: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+        }
+
+        .category-row:hover .delete-btn {
+            visibility: visible;
+        }
+
+        .delete-btn:hover {
+            opacity: 1;
+            background: rgba(239, 68, 68, 0.1);
+            color: rgb(239, 68, 68);
+        }
+
+        input, textarea, select {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.2s ease;
+            font-family: inherit;
+            color: var(--text-primary);
+        }
+
+        input, select {
+            height: 36px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            resize: vertical;
+            min-height: 80px;
+            line-height: 1.5;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+
+        input[type="number"] {
+            width: 100px;
+            text-align: right;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="text"].notes-input {
+            width: 100%;
+            text-align: left;
+        }
+        
+        .edit-name-input {
+            width: 100%;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: var(--spacing-sm);
+            height: auto;
+            margin: 0;
+        }
+
+        .category-label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            transition: background-color 0.2s ease;
+        }
+        
+        .category-label:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-xl);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-bottom: var(--spacing-lg);
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .saved-budget {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin: var(--spacing-sm) 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .saved-budget:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .budget-name {
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-primary);
+        }
+
+        .budget-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .add-category {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.5);
+            width: 100%;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .add-category:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .add-category svg {
+            margin-right: var(--spacing-sm);
+        }
+
+        .personal-breakdown {
+            text-align: center;
+        }
+
+        .personal-line {
+            font-size: 1rem;
+            margin: var(--spacing-md) 0;
+            color: var(--text-secondary);
+        }
+
+        .personal-amount {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: var(--spacing-xs);
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .saved-budget .delete-saved-btn {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+            visibility: hidden;
+            background: none;
+            border: none;
+            padding: var(--spacing-xs);
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            border-radius: var(--radius-sm);
+        }
+
+        .saved-budget:hover .delete-saved-btn {
+            visibility: visible;
+        }
+
+        .saved-budget .delete-saved-btn:hover {
+            opacity: 1;
+            background: rgba(239, 68, 68, 0.1);
+            color: rgb(239, 68, 68);
+        }
+
+        .income-section[style*="text-align: right"] input {
+            margin-left: auto;
+        }
+
+        /* Modal styles for future projections */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background-color: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .modal-intro {
+            background-color: rgba(2, 132, 199, 0.1);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-lg);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+        
+        .modal-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .modal-tab {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            cursor: pointer;
+            position: relative;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+        
+        .modal-tab.active {
+            color: var(--primary-color);
+        }
+        
+        .modal-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .modal-tab-content {
+            display: none;
+        }
+        
+        .modal-tab-content.active {
+            display: block;
+        }
+        
+        .basic-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .input-group label {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .input-row {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+        
+        .input-row label {
+            flex: 1;
+        }
+        
+        .input-row input {
+            width: 80px;
+        }
+
+        .life-stages {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            background-color: rgba(248, 250, 252, 0.8);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+        
+        .stage-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .stage-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .life-stage {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            background-color: white;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+        
+        .life-stage:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .stage-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: var(--spacing-md);
+        }
+        
+        .stage-young {
+            background-color: rgba(96, 165, 250, 0.2);
+            color: var(--color-young);
+        }
+        
+        .stage-family {
+            background-color: rgba(249, 115, 22, 0.2);
+            color: var(--color-family);
+        }
+        
+        .stage-empty {
+            background-color: rgba(139, 92, 246, 0.2);
+            color: var(--color-empty);
+        }
+        
+        .stage-retire {
+            background-color: rgba(236, 72, 153, 0.2);
+            color: var(--color-retire);
+        }
+        
+        .stage-info {
+            flex: 1;
+        }
+        
+        .stage-name {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .stage-years {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .stage-slider {
+            width: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stage-slider-value {
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+        
+        .stage-slider input {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+        }
+        
+        .stage-slider input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .stage-slider input::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            border: none;
+        }
+        
+        .projection-summary {
+            background-color: white;
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--border-color);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .summary-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .results-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .result-card {
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            background-color: white;
+        }
+        
+        .result-card.safe {
+            border-top: 4px solid var(--color-safe);
+        }
+        
+        .result-card.typical {
+            border-top: 4px solid var(--color-typical);
+        }
+        
+        .result-card.optimistic {
+            border-top: 4px solid var(--color-optimistic);
+        }
+        
+        .result-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            font-size: 0.9rem;
+        }
+        
+        .result-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: var(--spacing-xs) 0;
+        }
+        
+        .result-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .scenario-info {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+        
+        .scenario-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+        
+        .scenario-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: var(--spacing-xs);
+        }
+        
+        .scenario-safe-color {
+            background-color: var(--color-safe);
+        }
+        
+        .scenario-typical-color {
+            background-color: var(--color-typical);
+        }
+        
+        .scenario-optimistic-color {
+            background-color: var(--color-optimistic);
+        }
+        
+        .retirement-info {
+            margin-top: var(--spacing-lg);
+            background-color: rgba(248, 250, 252, 0.8);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .retirement-info strong {
+            color: var(--text-primary);
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .modal-button {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-button.primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .modal-button.primary:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .modal-button.secondary {
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .modal-button.secondary:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Simplifying the scenario tables */
+        .key-figures {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .key-figure {
+            background-color: white;
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .key-figure-title {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .key-figure-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .key-figure-description {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .right-column {
+                position: static;
+                width: auto;
+                height: auto;
+                margin-top: var(--spacing-lg);
+            }
+
+            .flow-container {
+                margin-right: 0;
+            }
+
+            .header-row {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+
+            .income-section {
+                text-align: left !important;
+            }
+            
+            .category-middle {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+            
+            .basic-inputs, 
+            .results-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .key-figures {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .type-breakdown-legend {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-xs);
+            }
+            
+            .type-breakdown-header {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+            
+            .life-stage {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .stage-icon {
+                margin-right: 0;
+                margin-bottom: var(--spacing-sm);
+            }
+            
+            .stage-slider {
+                width: 100%;
+                margin-top: var(--spacing-sm);
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: var(--spacing-sm);
+            }
+
+            .flow-container,
+            .personal-summary,
+            .versions-section,
+            .notes-section {
+                padding: var(--spacing-md);
+            }
+
+            .category-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--spacing-sm);
+            }
+
+            .category-left {
+                width: 100%;
+            }
+
+            .category-middle {
+                padding: 0;
+            }
+
+            input[type="number"] {
+                width: 100%;
+            }
+            
+            .modal-container {
+                padding: var(--spacing-md);
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="flow-container">
+
+            <div class="header-row">
+                <div class="income-section">
+                    <div>Alex income</div>
+                    <input type="number" id="alexIncome" value="4900" onchange="calculateSpendings()">
+                </div>
+                <div class="income-section" style="text-align: right;">
+                    <div>Emma income</div>
+                    <input type="number" id="emmaIncome" value="3100" onchange="calculateSpendings()">
+                </div>
+            </div>
+
+            <!-- Type breakdown bar -->
+            <div class="type-breakdown-container">
+                <div class="type-breakdown-header">
+                    <div class="type-breakdown-title">Spending Type Breakdown</div>
+                    <div class="toggle-container">
+                        <span>Include personal money</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="includePersonalToggle" checked onchange="calculateSpendings()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="type-breakdown-bar" id="typeBreakdownBar">
+                    <!-- Bar segments will be dynamically generated -->
+                </div>
+                <div class="type-breakdown-legend">
+                    <div class="legend-item" id="uncategorizedLegend">
+                        <div class="legend-color type-uncategorized"></div>
+                        <span>Uncategorized: <span id="uncategorizedPercent">0%</span></span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color type-fixed"></div>
+                        <span>Fixed: <span id="fixedPercent">0%</span></span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color type-investments"></div>
+                        <span>Investments: <span id="investmentsPercent">0%</span></span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color type-savings"></div>
+                        <span>Savings: <span id="savingsPercent">0%</span></span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color type-guilt-free"></div>
+                        <span>Guilt-free: <span id="guiltFreePercent">0%</span></span>
+                    </div>
+                    <div class="legend-item" id="personalLegend">
+                        <div class="legend-color type-personal"></div>
+                        <span>Personal money: <span id="personalPercent">0%</span></span>
+                    </div>
+                </div>
+                
+                <!-- Ramit's recommendations with pill styling -->
+                <div class="ramit-recommendations">
+                    <div class="ramit-title">What Ramit recommends:</div>
+                    <div class="ramit-content">
+                        <span class="recommendation-pill type-fixed">Fixed costs: 50-60%</span>
+                        <span class="recommendation-pill type-investments">Investments: 10%</span>
+                        <span class="recommendation-pill type-savings">Savings: 5-10%</span>
+                        <span class="recommendation-pill type-guilt-free">Guilt-free Spending: 20-35%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="total">Total needed in 2up each month: $<span id="total">0.00</span></div>
+
+            <div class="categories-section" id="categoriesContainer">
+                <!-- Categories will be dynamically generated -->
+            </div>
+
+            <button class="add-category" onclick="addNewCategory()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add new category
+            </button>
+        </div>
+
+        <div class="right-column">
+            <div class="personal-summary">
+                <div class="section-title">Personal spending money (per partner)</div>
+                <div class="personal-breakdown">
+                    <div class="personal-line">Per month: <span id="personalMonth" class="personal-amount">$0.00</span></div>
+                    <div class="personal-line">Per week: <span id="personalWeek" class="personal-amount">$0.00</span></div>
+                </div>
+            </div>
+            
+            <!-- Future Projections section -->
+            <div class="projections-section">
+                <div class="section-title">Future Planning</div>
+                <button class="button" onclick="openProjectionsModal()">
+                    View Your Financial Journey
+                </button>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-top: -10px;">
+                    See how your finances grow over time
+                </div>
+            </div>
+
+            <div class="versions-section">
+                <div class="section-title">Saved Budgets</div>
+                <button class="button" onclick="saveCurrentBudget()">
+                    Save Updates
+                </button>
+                <button class="button" onclick="saveAsNewBudget()">
+                    Save as new budget
+                </button>
+                <div id="savedBudgetsList">
+                    <!-- Saved budgets will be inserted here -->
+                </div>
+            </div>
+
+            <div class="notes-section">
+                <div class="section-title">Notes for next time</div>
+                <textarea id="budgetNotes" placeholder="Add notes or reminders..."></textarea>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Simplified Future Projections Modal -->
+    <div class="modal-overlay" id="projectionsModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">Your Financial Journey</h2>
+                <button class="modal-close" onclick="closeProjectionsModal()">&times;</button>
+            </div>
+            
+            <div class="modal-intro">
+                See how your current saving and investment choices affect your financial future. We'll show you when you might be able to retire based on how your investments grow over time.
+            </div>
+            
+            <div class="modal-tabs">
+                <div class="modal-tab active" onclick="switchTab('basics')">Basic Settings</div>
+                <div class="modal-tab" onclick="switchTab('lifestages')">Life Stages</div>
+                <div class="modal-tab" onclick="switchTab('results')">Results</div>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Basic Settings Tab -->
+                <div class="modal-tab-content active" id="basics-tab">
+                    <div class="basic-inputs">
+                        <div class="input-group">
+                            <label>Your Current Ages</label>
+                            <div class="input-row">
+                                <label>Alex's age:</label>
+                                <input type="number" id="alexAge" value="35" min="18" max="100" onchange="calculateProjections()">
+                            </div>
+                            <div class="input-row">
+                                <label>Emma's age:</label>
+                                <input type="number" id="emmaAge" value="33" min="18" max="100" onchange="calculateProjections()">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Investment Growth</label>
+                            <div class="input-row">
+                                <label>Conservative estimate:</label>
+                                <input type="number" id="safeRate" value="4" min="1" max="15" onchange="calculateProjections()">
+                                <span>%</span>
+                            </div>
+                            <div class="input-row">
+                                <label>Average estimate:</label>
+                                <input type="number" id="typicalRate" value="7" min="1" max="15" onchange="calculateProjections()">
+                                <span>%</span>
+                            </div>
+                            <div class="input-row">
+                                <label>Optimistic estimate:</label>
+                                <input type="number" id="optimisticRate" value="10" min="1" max="15" onchange="calculateProjections()">
+                                <span>%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Retirement Target</label>
+                            <div class="input-row">
+                                <label>Retirement fund goal:</label>
+                                <input type="number" id="yearsOfExpenses" value="25" min="10" max="50" onchange="calculateProjections()">
+                                <span>× annual expenses</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Withdrawals in Retirement</label>
+                            <div class="input-row">
+                                <label>Safe withdrawal rate:</label>
+                                <input type="number" id="withdrawalRate" value="4" min="2" max="6" step="0.1" onchange="calculateProjections()">
+                                <span>% per year</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="key-figures">
+                        <div class="key-figure">
+                            <div class="key-figure-title">Current Monthly Investments</div>
+                            <div class="key-figure-value" id="currentInvestmentDisplay">$800</div>
+                            <div class="key-figure-description">Amount you're currently investing each month</div>
+                        </div>
+                        
+                        <div class="key-figure">
+                            <div class="key-figure-title">Current Monthly Expenses</div>
+                            <div class="key-figure-value" id="currentExpensesDisplay">$4,000</div>
+                            <div class="key-figure-description">Your total monthly shared expenses</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Life Stages Tab -->
+                <div class="modal-tab-content" id="lifestages-tab">
+                    <div class="stage-title">How Your Expenses Change Over Time</div>
+                    <div class="stage-description">
+                        Adjust how much your expenses will increase or decrease during different life stages.
+                    </div>
+                    
+                    <div class="life-stages">
+                        <div class="life-stage">
+                            <div class="stage-icon stage-young">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="10" rx="2" />
+                                    <circle cx="12" cy="5" r="2" />
+                                    <path d="M12 7v4" />
+                                    <path d="M8 16v-1" />
+                                    <path d="M16 16v-1" />
+                                </svg>
+                            </div>
+                            <div class="stage-info">
+                                <div class="stage-name">Young Adult/Couple</div>
+                                <div class="stage-years">Current stage</div>
+                            </div>
+                            <div class="stage-slider">
+                                <div class="stage-slider-value">No change</div>
+                                <input type="range" min="-50" max="50" value="0" step="5" id="youngAdultSlider" oninput="updateLifeStageSlider(this, 'youngAdult')" onchange="calculateProjections()">
+                            </div>
+                        </div>
+                        
+                        <div class="life-stage">
+                            <div class="stage-icon stage-family">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="5" r="2" />
+                                    <path d="M10 10h4v4" />
+                                    <circle cx="6" cy="13" r="1.5" />
+                                    <circle cx="18" cy="13" r="1.5" />
+                                    <path d="M8 21v-5" />
+                                    <path d="M16 21v-5" />
+                                    <path d="M12 21v-3" />
+                                </svg>
+                            </div>
+                            <div class="stage-info">
+                                <div class="stage-name">Family with Children</div>
+                                <div class="stage-years">Higher expenses for childcare, education, etc.</div>
+                            </div>
+                            <div class="stage-slider">
+                                <div class="stage-slider-value">+30%</div>
+                                <input type="range" min="-50" max="100" value="30" step="5" id="familySlider" oninput="updateLifeStageSlider(this, 'family')" onchange="calculateProjections()">
+                            </div>
+                        </div>
+                        
+                        <div class="life-stage">
+                            <div class="stage-icon stage-empty">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="9" cy="7" r="2" />
+                                    <circle cx="15" cy="7" r="2" />
+                                    <path d="M8 14v-1" />
+                                    <path d="M16 14v-1" />
+                                    <path d="M3 16h18c0 3-3 4-6 4s-6-1-6-4z" />
+                                </svg>
+                            </div>
+                            <div class="stage-info">
+                                <div class="stage-name">Empty Nest</div>
+                                <div class="stage-years">After children are independent</div>
+                            </div>
+                            <div class="stage-slider">
+                                <div class="stage-slider-value">-20%</div>
+                                <input type="range" min="-50" max="100" value="-20" step="5" id="emptyNestSlider" oninput="updateLifeStageSlider(this, 'emptyNest')" onchange="calculateProjections()">
+                            </div>
+                        </div>
+                        
+                        <div class="life-stage">
+                            <div class="stage-icon stage-retire">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                                    <path d="M3 6l9 6 9-6"></path>
+                                    <path d="M3 18h18"></path>
+                                </svg>
+                            </div>
+                            <div class="stage-info">
+                                <div class="stage-name">Retirement</div>
+                                <div class="stage-years">After stopping full-time work</div>
+                            </div>
+                            <div class="stage-slider">
+                                <div class="stage-slider-value">-10%</div>
+                                <input type="range" min="-50" max="100" value="-10" step="5" id="retirementSlider" oninput="updateLifeStageSlider(this, 'retirement')" onchange="calculateProjections()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Tab -->
+                <div class="modal-tab-content" id="results-tab">
+                    <div class="projection-summary">
+                        <div class="summary-title">Your Investment Growth Journey</div>
+                        <div class="chart-container">
+                            <canvas id="growthChart"></canvas>
+                        </div>
+                        
+                        <div class="scenario-info">
+                            <div class="scenario-item">
+                                <div class="scenario-color scenario-safe-color"></div>
+                                <span>Conservative (4%)</span>
+                            </div>
+                            <div class="scenario-item">
+                                <div class="scenario-color scenario-typical-color"></div>
+                                <span>Average (7%)</span>
+                            </div>
+                            <div class="scenario-item">
+                                <div class="scenario-color scenario-optimistic-color"></div>
+                                <span>Optimistic (10%)</span>
+                            </div>
+                            <div class="scenario-item">
+                                <div style="width: 12px; height: 2px; background-color: #6b7280; margin-right: 4px;"></div>
+                                <span>Retirement Goal</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="results-cards">
+                        <div class="result-card safe">
+                            <div class="result-title">Conservative Plan</div>
+                            <div class="result-value" id="safeRetirementAge">66</div>
+                            <div class="result-subtitle">Retirement age</div>
+                        </div>
+                        
+                        <div class="result-card typical">
+                            <div class="result-title">Average Plan</div>
+                            <div class="result-value" id="typicalRetirementAge">59</div>
+                            <div class="result-subtitle">Retirement age</div>
+                        </div>
+                        
+                        <div class="result-card optimistic">
+                            <div class="result-title">Optimistic Plan</div>
+                            <div class="result-value" id="optimisticRetirementAge">54</div>
+                            <div class="result-subtitle">Retirement age</div>
+                        </div>
+                    </div>
+                    
+                    <div class="retirement-info">
+                        <p>With your current budget, <strong>investing $<span id="investmentAmountDisplay">800</span>/month</strong>, you could potentially retire between <strong>ages <span id="earliestRetirementAge">54</span> and <span id="latestRetirementAge">66</span></strong> depending on market performance.</p>
+                        <p>Your estimated monthly income in retirement would be <strong>$<span id="monthlyRetirementIncome">3,333</span></strong> based on your target fund and withdrawal rate.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-button secondary" onclick="closeProjectionsModal()">Close</button>
+                <button class="modal-button primary" onclick="calculateProjections()">Recalculate</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const defaultCategories = [
+            { name: 'Groceries', amount: 800, notes: '', type: 'Fixed' },
+            { name: 'Rent', amount: 2000, notes: '', type: 'Fixed' },
+            { name: 'Electricity', amount: 79, notes: '', type: 'Fixed' },
+            { name: 'Household', amount: 40, notes: '', type: 'Fixed' },
+            { name: 'Hot water', amount: 50, notes: '', type: 'Fixed' },
+            { name: 'Internet', amount: 70, notes: '', type: 'Fixed' },
+            { name: 'Subscriptions', amount: 40, notes: '', type: 'Fixed' },
+            { name: 'Public transport', amount: 100, notes: '', type: 'Fixed' },
+            { name: 'Kids days out', amount: 195, notes: '', type: 'Guilt-free Spending' },
+            { name: 'Kids hobbies', amount: 50, notes: '', type: 'Guilt-free Spending' },
+            { name: 'Kids misc', amount: 260, notes: '', type: 'Guilt-free Spending' },
+            { name: 'Pocket money', amount: 45, notes: '', type: 'Guilt-free Spending' },
+            { name: 'Year off', amount: 75, notes: '', type: 'Savings' },
+            { name: 'Next trip', amount: 150, notes: '', type: 'Savings' },
+            { name: 'Big trip', amount: 260, notes: '', type: 'Savings' },
+            { name: 'Murundaka', amount: 160, notes: '', type: 'Savings' },
+            { name: 'Shared expenses', amount: 0, notes: '', type: '' },
+            { name: 'Alex investments', amount: 800, notes: '', type: 'Investments' }
+        ];
+
+        let currentBudgetId = 'current';
+        let growthChart = null;
+        let currentTotalMonthlyExpenses = 0;
+        let currentInvestmentAmount = 0;
+        
+        // Create a single category row with drag functionality and editable name
+        function createCategoryRow(name, amount, notes = '', type = '') {
+            const row = document.createElement('div');
+            row.className = 'category-row';
+            row.draggable = true;
+            
+            // Add background color based on type
+            if (type) {
+                const typeClass = type === 'Fixed' ? 'fixed' : 
+                                  type === 'Investments' ? 'investments' : 
+                                  type === 'Savings' ? 'savings' : 
+                                  type === 'Guilt-free Spending' ? 'guilt-free' : 'uncategorized';
+                row.classList.add('bg-' + typeClass);
+            }
+            
+            row.addEventListener('dragstart', handleDragStart);
+            row.addEventListener('dragover', handleDragOver);
+            row.addEventListener('dragenter', handleDragEnter);
+            row.addEventListener('dragleave', handleDragLeave);
+            row.addEventListener('drop', handleDrop);
+            row.addEventListener('dragend', handleDragEnd);
+            
+            const leftSection = document.createElement('div');
+            leftSection.className = 'category-left';
+            
+            const dragHandle = document.createElement('div');
+            dragHandle.className = 'drag-handle';
+            dragHandle.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="9" cy="6" r="2" />
+                    <circle cx="9" cy="12" r="2" />
+                    <circle cx="9" cy="18" r="2" />
+                    <circle cx="15" cy="6" r="2" />
+                    <circle cx="15" cy="12" r="2" />
+                    <circle cx="15" cy="18" r="2" />
+                </svg>
+            `;
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.innerHTML = `
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            `;
+            deleteBtn.onclick = () => deleteCategory(deleteBtn);
+            
+            const categoryLabel = document.createElement('span');
+            categoryLabel.className = 'category-label';
+            categoryLabel.textContent = name;
+            categoryLabel.onclick = (e) => {
+                e.stopPropagation();
+                makeNameEditable(categoryLabel);
+            };
+            
+            leftSection.appendChild(dragHandle);
+            leftSection.appendChild(deleteBtn);
+            leftSection.appendChild(categoryLabel);
+            
+            const middleSection = document.createElement('div');
+            middleSection.className = 'category-middle';
+            
+            const notesInput = document.createElement('input');
+            notesInput.type = 'text';
+            notesInput.className = 'notes-input';
+            notesInput.value = notes;
+            notesInput.maxLength = 100;
+            notesInput.placeholder = 'Add notes...';
+            notesInput.onchange = calculateSpendings;
+            
+            const typeSelect = document.createElement('select');
+            typeSelect.className = 'category-type-select';
+            typeSelect.innerHTML = `
+                <option value="" ${type === '' ? 'selected' : ''}>Select Type</option>
+                <option value="Fixed" ${type === 'Fixed' ? 'selected' : ''}>Fixed</option>
+                <option value="Investments" ${type === 'Investments' ? 'selected' : ''}>Investments</option>
+                <option value="Savings" ${type === 'Savings' ? 'selected' : ''}>Savings</option>
+                <option value="Guilt-free Spending" ${type === 'Guilt-free Spending' ? 'selected' : ''}>Guilt-free Spending</option>
+            `;
+            
+            // Event listener to update background color when type changes
+            typeSelect.onchange = (e) => {
+                updateCategoryRowBackground(row, e.target.value);
+                calculateSpendings();
+            };
+            
+            middleSection.appendChild(notesInput);
+            middleSection.appendChild(typeSelect);
+            
+            const amountInput = document.createElement('input');
+            amountInput.type = 'number';
+            amountInput.value = amount;
+            amountInput.onchange = calculateSpendings;
+            
+            row.appendChild(leftSection);
+            row.appendChild(middleSection);
+            row.appendChild(amountInput);
+            
+            return row;
+        }
+        
+        // Make the category name editable
+        function makeNameEditable(labelElement) {
+            const currentName = labelElement.textContent;
+            const parent = labelElement.parentElement;
+            
+            // Create input element
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'edit-name-input';
+            input.value = currentName;
+            
+            // Hide the label
+            labelElement.style.display = 'none';
+            
+            // Add input to the DOM
+            parent.appendChild(input);
+            input.focus();
+            
+            // Handle saving the edited name
+            const saveEdit = () => {
+                const newName = input.value.trim();
+                if (newName) {
+                    labelElement.textContent = newName;
+                }
+                labelElement.style.display = '';
+                parent.removeChild(input);
+                calculateSpendings(); // Update calculations
+            };
+            
+            // Save on blur or Enter key
+            input.addEventListener('blur', saveEdit);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    saveEdit();
+                } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    labelElement.style.display = '';
+                    parent.removeChild(input);
+                }
+            });
+        }
+        
+        // Update background color of a category row based on its type
+        function updateCategoryRowBackground(rowElement, type) {
+            // Remove all existing background classes
+            rowElement.classList.remove('bg-uncategorized', 'bg-fixed', 'bg-investments', 'bg-savings', 'bg-guilt-free');
+            
+            // Add the appropriate background class
+            if (type === 'Fixed') {
+                rowElement.classList.add('bg-fixed');
+            } else if (type === 'Investments') {
+                rowElement.classList.add('bg-investments');
+            } else if (type === 'Savings') {
+                rowElement.classList.add('bg-savings');
+            } else if (type === 'Guilt-free Spending') {
+                rowElement.classList.add('bg-guilt-free');
+            } else {
+                rowElement.classList.add('bg-uncategorized');
+            }
+        }
+        
+        // Drag and drop functionality
+        let dragSrcElement = null;
+        
+        function handleDragStart(e) {
+            dragSrcElement = this;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.outerHTML);
+            this.classList.add('dragging');
+        }
+        
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+        
+        function handleDragEnter(e) {
+            this.classList.add('drop-target');
+        }
+        
+        function handleDragLeave(e) {
+            this.classList.remove('drop-target');
+        }
+        
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            if (dragSrcElement !== this) {
+                const container = document.getElementById('categoriesContainer');
+                const rows = Array.from(container.querySelectorAll('.category-row'));
+                const srcIndex = rows.indexOf(dragSrcElement);
+                const destIndex = rows.indexOf(this);
+                
+                if (srcIndex < destIndex) {
+                    container.insertBefore(dragSrcElement, this.nextSibling);
+                } else {
+                    container.insertBefore(dragSrcElement, this);
+                }
+                
+                calculateSpendings();
+            }
+            
+            this.classList.remove('drop-target');
+            return false;
+        }
+        
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.category-row').forEach(row => {
+                row.classList.remove('drop-target');
+            });
+        }
+
+        function getCurrentBudgetData() {
+            const categories = [];
+            document.querySelectorAll('.category-row').forEach(row => {
+                categories.push({
+                    name: row.querySelector('.category-label').textContent,
+                    amount: Number(row.querySelector('input[type="number"]').value) || 0,
+                    notes: row.querySelector('.notes-input').value || '',
+                    type: row.querySelector('.category-type-select').value || ''
+                });
+            });
+
+            return {
+                id: currentBudgetId,
+                alexIncome: Number(document.getElementById('alexIncome').value) || 0,
+                emmaIncome: Number(document.getElementById('emmaIncome').value) || 0,
+                categories: categories,
+                notes: document.getElementById('budgetNotes').value || '',
+                lastModified: new Date().toISOString(),
+                includePersonal: document.getElementById('includePersonalToggle').checked
+            };
+        }
+
+        function loadBudgetData(budgetData) {
+            document.getElementById('alexIncome').value = budgetData.alexIncome;
+            document.getElementById('emmaIncome').value = budgetData.emmaIncome;
+            
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = '';
+            
+            // Create and append each category row
+            budgetData.categories.forEach(cat => {
+                const row = createCategoryRow(cat.name, cat.amount, cat.notes, cat.type);
+                container.appendChild(row);
+            });
+            
+            document.getElementById('budgetNotes').value = budgetData.notes || '';
+            
+            // Set the toggle state if it exists in the saved data
+            if (budgetData.hasOwnProperty('includePersonal')) {
+                document.getElementById('includePersonalToggle').checked = budgetData.includePersonal;
+            }
+            
+            currentBudgetId = budgetData.id;
+            
+            calculateSpendings();
+        }
+
+        function initializeCategories() {
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = '';
+            
+            // Create and append each default category
+            defaultCategories.forEach(cat => {
+                const row = createCategoryRow(cat.name, cat.amount, cat.notes, cat.type);
+                container.appendChild(row);
+            });
+            
+            calculateSpendings();
+        }
+
+        function addNewCategory() {
+            const name = prompt('Enter category name:');
+            if (name) {
+                const container = document.getElementById('categoriesContainer');
+                const row = createCategoryRow(name, 0, '', '');
+                container.appendChild(row);
+                calculateSpendings();
+            }
+        }
+
+        function deleteCategory(button) {
+            if (confirm('Are you sure you want to delete this category?')) {
+                const row = button.closest('.category-row');
+                row.remove();
+                calculateSpendings();
+            }
+        }
+
+        function updateTypeBreakdown(typeData, total) {
+            // Update the visualization bar
+            const breakdownBar = document.getElementById('typeBreakdownBar');
+            breakdownBar.innerHTML = '';
+            
+            // Add segments for each type
+            Object.entries(typeData).forEach(([type, amount]) => {
+                if (amount > 0) {
+                    const percent = (amount / total * 100);
+                    const displayPercent = Math.round(percent);
+                    
+                    const segment = document.createElement('div');
+                    
+                    // Map type names to CSS class names
+                    let typeClass = 'uncategorized';
+                    if (type === 'Fixed') typeClass = 'fixed';
+                    else if (type === 'Investments') typeClass = 'investments';
+                    else if (type === 'Savings') typeClass = 'savings';
+                    else if (type === 'Guilt-free Spending') typeClass = 'guilt-free';
+                    else if (type === 'Personal') typeClass = 'personal';
+                    
+                    segment.className = `type-bar-segment type-${typeClass}`;
+                    segment.style.width = `${percent}%`;
+                    if (percent > 5) {
+                        segment.textContent = `${displayPercent}%`;
+                    }
+                    breakdownBar.appendChild(segment);
+                }
+            });
+            
+            // Update the percentage text in the legend (rounded to whole numbers)
+            // Handle uncategorized - hide if 0%
+            const uncategorizedPercent = Math.round((typeData[''] || 0) / total * 100);
+            document.getElementById('uncategorizedPercent').textContent = `${uncategorizedPercent}%`;
+            
+            // Hide the uncategorized legend item if the percentage is 0
+            document.getElementById('uncategorizedLegend').style.display = 
+                uncategorizedPercent === 0 ? 'none' : 'flex';
+            
+            // Update other percentages
+            document.getElementById('fixedPercent').textContent = 
+                `${Math.round((typeData['Fixed'] || 0) / total * 100)}%`;
+            document.getElementById('investmentsPercent').textContent = 
+                `${Math.round((typeData['Investments'] || 0) / total * 100)}%`;
+            document.getElementById('savingsPercent').textContent = 
+                `${Math.round((typeData['Savings'] || 0) / total * 100)}%`;
+            document.getElementById('guiltFreePercent').textContent = 
+                `${Math.round((typeData['Guilt-free Spending'] || 0) / total * 100)}%`;
+            
+            // Handle personal money legend item
+            const personalPercent = Math.round((typeData['Personal'] || 0) / total * 100);
+            document.getElementById('personalPercent').textContent = `${personalPercent}%`;
+            
+            // Show/hide personal money based on toggle state and amount
+            const includePersonal = document.getElementById('includePersonalToggle').checked;
+            document.getElementById('personalLegend').style.display = 
+                (includePersonal && personalPercent > 0) ? 'flex' : 'none';
+        }
+
+        function calculateSpendings() {
+            const alexIncome = Number(document.getElementById('alexIncome').value) || 0;
+            const emmaIncome = Number(document.getElementById('emmaIncome').value) || 0;
+            const includePersonal = document.getElementById('includePersonalToggle').checked;
+            
+            // Initialize type-based totals
+            const typeAmounts = {
+                '': 0,               // Uncategorized
+                'Fixed': 0,
+                'Investments': 0,
+                'Savings': 0,
+                'Guilt-free Spending': 0,
+                'Personal': 0        // For personal spending money
+            };
+            
+            // Calculate total shared expenses and type breakdown
+            let sharedExpenses = 0;
+            document.querySelectorAll('.category-row').forEach(row => {
+                const amount = Number(row.querySelector('input[type="number"]').value) || 0;
+                const type = row.querySelector('.category-type-select').value;
+                
+                sharedExpenses += amount;
+                typeAmounts[type] += amount;
+            });
+            
+            // Update total display
+            document.getElementById('total').textContent = sharedExpenses.toFixed(2);
+            
+            // Store values for projections
+            currentTotalMonthlyExpenses = sharedExpenses;
+            currentInvestmentAmount = typeAmounts['Investments'] || 0;
+            
+            // Update investment and expenses display in projections modal
+            document.getElementById('currentInvestmentDisplay').textContent = formatMoney(currentInvestmentAmount);
+            document.getElementById('currentExpensesDisplay').textContent = formatMoney(currentTotalMonthlyExpenses);
+            document.getElementById('investmentAmountDisplay').textContent = formatMoney(currentInvestmentAmount);
+            
+            // Calculate personal spending money
+            const totalIncome = alexIncome + emmaIncome;
+            const remainingAfterShared = totalIncome - sharedExpenses;
+            const personalAmountMonthly = remainingAfterShared / 2;
+            const personalAmountWeekly = personalAmountMonthly / 4.33;
+            
+            // Update personal money display
+            document.getElementById('personalMonth').textContent = 
+                `$${personalAmountMonthly.toFixed(2)}`;
+            document.getElementById('personalWeek').textContent = 
+                `$${personalAmountWeekly.toFixed(2)}`;
+            
+            // Determine what total to use for visualization based on toggle
+            let totalForVisualization = sharedExpenses;
+            
+            // Add personal money to type amounts for visualization if toggle is on
+            if (includePersonal) {
+                const totalPersonalMoney = personalAmountMonthly * 2; // Combined amount for both partners
+                typeAmounts['Personal'] = totalPersonalMoney;
+                totalForVisualization += totalPersonalMoney;
+            } else {
+                typeAmounts['Personal'] = 0;
+            }
+            
+            // Update type breakdown visualization
+            updateTypeBreakdown(typeAmounts, totalForVisualization);
+        }
+
+        function showSuccessMessage(button, message) {
+            const originalText = button.textContent;
+            const originalBg = button.style.background;
+            
+            button.textContent = message;
+            button.style.background = '#059669';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = originalBg;
+            }, 2000);
+        }
+
+        function saveCurrentBudget() {
+            const budgetData = getCurrentBudgetData();
+            const savedBudgets = JSON.parse(localStorage.getItem('savedBudgets') || '{}');
+            
+            if (savedBudgets[currentBudgetId] && savedBudgets[currentBudgetId].name) {
+                budgetData.name = savedBudgets[currentBudgetId].name;
+                budgetData.description = savedBudgets[currentBudgetId].description;
+                budgetData.createdAt = savedBudgets[currentBudgetId].createdAt;
+            }
+            
+            savedBudgets[currentBudgetId] = budgetData;
+            localStorage.setItem('savedBudgets', JSON.stringify(savedBudgets));
+            updateSavedBudgetsList();
+            
+            const saveButton = document.querySelector('.versions-section .button');
+            showSuccessMessage(saveButton, 'Saved!');
+        }
+
+        function generateUniqueId() {
+            return 'budget_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function saveAsNewBudget() {
+            const name = prompt('Enter a name for this budget:');
+            if (!name) return;
+            
+            const description = prompt('Enter a description (optional):');
+            const budgetData = getCurrentBudgetData();
+            const newId = generateUniqueId();
+            
+            budgetData.id = newId;
+            budgetData.name = name;
+            budgetData.description = description || '';
+            budgetData.createdAt = new Date().toISOString();
+            
+            const savedBudgets = JSON.parse(localStorage.getItem('savedBudgets') || '{}');
+            savedBudgets[newId] = budgetData;
+            currentBudgetId = newId;
+            
+            localStorage.setItem('savedBudgets', JSON.stringify(savedBudgets));
+            updateSavedBudgetsList();
+            
+            const saveButton = document.querySelector('.versions-section .button:nth-child(3)');
+            showSuccessMessage(saveButton, 'New Budget Saved!');
+        }
+
+        function createSavedBudgetElement(budget) {
+            const div = document.createElement('div');
+            div.className = 'saved-budget';
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-saved-btn';
+            deleteBtn.innerHTML = `
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            `;
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                deleteSavedBudget(budget.id);
+            };
+            
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'budget-name';
+            nameDiv.textContent = budget.name;
+            
+            const descDiv = document.createElement('div');
+            descDiv.className = 'budget-description';
+            descDiv.textContent = budget.description || 'No description';
+            
+            div.onclick = () => loadSavedBudget(budget.id);
+            
+            div.appendChild(deleteBtn);
+            div.appendChild(nameDiv);
+            div.appendChild(descDiv);
+            
+            return div;
+        }
+
+        function deleteSavedBudget(budgetId) {
+            if (!confirm('Are you sure you want to delete this budget? This cannot be undone.')) {
+                return;
+            }
+            
+            const savedBudgets = JSON.parse(localStorage.getItem('savedBudgets') || '{}');
+            delete savedBudgets[budgetId];
+            
+            if (budgetId === currentBudgetId) {
+                currentBudgetId = 'current';
+            }
+            
+            localStorage.setItem('savedBudgets', JSON.stringify(savedBudgets));
+            updateSavedBudgetsList();
+        }
+
+        function updateSavedBudgetsList() {
+            const container = document.getElementById('savedBudgetsList');
+            container.innerHTML = '';
+            
+            const savedBudgets = JSON.parse(localStorage.getItem('savedBudgets') || '{}');
+            const sortedBudgets = Object.values(savedBudgets)
+                .filter(budget => budget.name)
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            if (sortedBudgets.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--text-secondary);">No saved budgets yet</div>';
+                return;
+            }
+            
+            sortedBudgets.forEach(budget => {
+                container.appendChild(createSavedBudgetElement(budget));
+            });
+        }
+
+        function loadSavedBudget(budgetId) {
+            if (currentBudgetId && !confirm('Loading a new budget will override your current changes. Are you sure you want to continue?')) {
+                return;
+            }
+            
+            const savedBudgets = JSON.parse(localStorage.getItem('savedBudgets') || '{}');
+            const budgetData = savedBudgets[budgetId];
+            
+            if (!budgetData) {
+                alert('Error: Budget not found!');
+                return;
+            }
+            
+            loadBudgetData(budgetData);
+            updateSavedBudgetsList();
+        }
+        
+        // Future Projections Modal Functions
+        function openProjectionsModal() {
+            document.getElementById('projectionsModal').classList.add('active');
+            switchTab('basics');
+            calculateProjections();
+        }
+        
+        function closeProjectionsModal() {
+            document.getElementById('projectionsModal').classList.remove('active');
+        }
+        
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.modal-tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Deactivate all tabs
+            document.querySelectorAll('.modal-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Activate the selected tab and content
+            document.getElementById(tabName + '-tab').classList.add('active');
+            document.querySelector(`.modal-tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+        }
+        
+        function updateLifeStageSlider(slider, stageName) {
+            const value = slider.value;
+            const displayEl = slider.previousElementSibling;
+            
+            if (value > 0) {
+                displayEl.textContent = `+${value}%`;
+            } else if (value < 0) {
+                displayEl.textContent = `${value}%`;
+            } else {
+                displayEl.textContent = 'No change';
+            }
+        }
+        
+        function calculateProjections() {
+            const alexAge = Number(document.getElementById('alexAge').value) || 35;
+            const emmaAge = Number(document.getElementById('emmaAge').value) || 33;
+            const targetPartnerAge = Math.max(alexAge, emmaAge);
+            
+            const safeRate = Number(document.getElementById('safeRate').value) / 100 || 0.04;
+            const typicalRate = Number(document.getElementById('typicalRate').value) / 100 || 0.07;
+            const optimisticRate = Number(document.getElementById('optimisticRate').value) / 100 || 0.10;
+            
+            const withdrawalRate = Number(document.getElementById('withdrawalRate').value) / 100 || 0.04;
+            const yearsOfExpensesTarget = Number(document.getElementById('yearsOfExpenses').value) || 25;
+            
+            // Get life stage expense adjustments
+            const youngAdultAdjustment = Number(document.getElementById('youngAdultSlider').value) / 100 || 0;
+            const familyAdjustment = Number(document.getElementById('familySlider').value) / 100 || 0.3;
+            const emptyNestAdjustment = Number(document.getElementById('emptyNestSlider').value) / 100 || -0.2;
+            const retirementAdjustment = Number(document.getElementById('retirementSlider').value) / 100 || -0.1;
+            
+            // Monthly values to annual
+            const annualExpenses = currentTotalMonthlyExpenses * 12;
+            const annualInvestmentContribution = currentInvestmentAmount * 12;
+            
+            // Target retirement amount
+            const targetAmount = annualExpenses * (1 + retirementAdjustment) * yearsOfExpensesTarget;
+            
+            // Projection years
+            const projectionYears = 40;
+            
+            // Calculate growth with life stage adjustments
+            const safeProjection = calculateGrowthWithLifeStages(
+                annualInvestmentContribution, 
+                safeRate, 
+                projectionYears,
+                targetPartnerAge,
+                [youngAdultAdjustment, familyAdjustment, emptyNestAdjustment]
+            );
+            
+            const typicalProjection = calculateGrowthWithLifeStages(
+                annualInvestmentContribution, 
+                typicalRate, 
+                projectionYears,
+                targetPartnerAge,
+                [youngAdultAdjustment, familyAdjustment, emptyNestAdjustment]
+            );
+            
+            const optimisticProjection = calculateGrowthWithLifeStages(
+                annualInvestmentContribution, 
+                optimisticRate, 
+                projectionYears,
+                targetPartnerAge,
+                [youngAdultAdjustment, familyAdjustment, emptyNestAdjustment]
+            );
+            
+            // Calculate retirement ages for each scenario
+            const safeRetirementYear = findRetirementYear(safeProjection, targetAmount);
+            const typicalRetirementYear = findRetirementYear(typicalProjection, targetAmount);
+            const optimisticRetirementYear = findRetirementYear(optimisticProjection, targetAmount);
+            
+            const safeRetirementAge = targetPartnerAge + safeRetirementYear;
+            const typicalRetirementAge = targetPartnerAge + typicalRetirementYear;
+            const optimisticRetirementAge = targetPartnerAge + optimisticRetirementYear;
+            
+            // Update retirement age display
+            document.getElementById('safeRetirementAge').textContent = safeRetirementAge >= 100 ? "100+" : safeRetirementAge;
+            document.getElementById('typicalRetirementAge').textContent = typicalRetirementAge >= 100 ? "100+" : typicalRetirementAge;
+            document.getElementById('optimisticRetirementAge').textContent = optimisticRetirementAge >= 100 ? "100+" : optimisticRetirementAge;
+            
+            // Update retirement info summary
+            document.getElementById('earliestRetirementAge').textContent = 
+                optimisticRetirementAge >= 100 ? typicalRetirementAge : optimisticRetirementAge;
+            document.getElementById('latestRetirementAge').textContent = 
+                safeRetirementAge >= 100 ? "80+" : safeRetirementAge;
+            
+            // Calculate retirement income
+            const monthlyRetirementIncome = (targetAmount * withdrawalRate / 12).toFixed(0);
+            document.getElementById('monthlyRetirementIncome').textContent = formatMoney(monthlyRetirementIncome);
+            
+            // Update the chart
+            updateGrowthChart(safeProjection, typicalProjection, optimisticProjection, targetAmount);
+        }
+        
+        function calculateGrowthWithLifeStages(annualContribution, growthRate, years, startAge, adjustments) {
+            // Define age ranges for life stages (these are approximate)
+            const youngAdultEnd = 35; // Young adult stage ends around 35
+            const familyStageEnd = 55; // Family stage ends around 55
+            const emptyNestEnd = 70;  // Empty nest stage ends around 70
+            
+            let balance = 0;
+            const projection = [];
+            
+            for (let year = 0; year <= years; year++) {
+                projection.push(balance);
+                
+                let currentAge = startAge + year;
+                let currentContribution = annualContribution;
+                
+                // Adjust contribution based on life stage
+                if (currentAge < youngAdultEnd) {
+                    // Young adult stage
+                    currentContribution = annualContribution * (1 + adjustments[0]);
+                } else if (currentAge < familyStageEnd) {
+                    // Family stage
+                    currentContribution = annualContribution * (1 + adjustments[1]);
+                } else if (currentAge < emptyNestEnd) {
+                    // Empty nest stage
+                    currentContribution = annualContribution * (1 + adjustments[2]);
+                } else {
+                    // Retirement stage - no more contributions
+                    currentContribution = 0;
+                }
+                
+                balance = balance * (1 + growthRate) + currentContribution;
+            }
+            
+            return projection;
+        }
+        
+        function findRetirementYear(projection, targetAmount) {
+            for (let i = 0; i < projection.length; i++) {
+                if (projection[i] >= targetAmount) {
+                    return i;
+                }
+            }
+            return projection.length - 1; // Not reached within projection timeline
+        }
+        
+        function updateGrowthChart(safeProjection, typicalProjection, optimisticProjection, targetAmount) {
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            
+            // Prepare labels (years)
+            const labels = Array.from({length: Math.min(40, safeProjection.length)}, (_, i) => `Year ${i}`);
+            
+            // Limit data points for cleaner display
+            const limitedSafe = safeProjection.slice(0, 40);
+            const limitedTypical = typicalProjection.slice(0, 40);
+            const limitedOptimistic = optimisticProjection.slice(0, 40);
+            
+            // Add target line
+            const targetLine = Array(40).fill(targetAmount);
+            
+            // Destroy existing chart if it exists
+            if (growthChart) {
+                growthChart.destroy();
+            }
+            
+            // Create the chart
+            growthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Conservative Plan',
+                            data: limitedSafe,
+                            borderColor: 'rgb(239, 68, 68)',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Average Plan',
+                            data: limitedTypical,
+                            borderColor: 'rgb(16, 185, 129)',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Optimistic Plan',
+                            data: limitedOptimistic,
+                            borderColor: 'rgb(59, 130, 246)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Retirement Goal',
+                            data: targetLine,
+                            borderColor: 'rgb(107, 114, 128)',
+                            borderDash: [5, 5],
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                
+
+                                    if (value >= 1000000) {
+                                        return '$' + (value / 1000000).toFixed(1) + 'M';
+                                    } else if (value >= 1000) {
+                                        return '$' + (value / 1000).toFixed(0) + 'k';
+                                    }
+                                    return '$' + value;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += '$' + formatMoney(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+        
+        function formatMoney(amount) {
+            return new Intl.NumberFormat('en-US', {
+                maximumFractionDigits: 0
+            }).format(Math.round(amount));
+        }
+
+        // Update existing budgets to include type field if missing
+        function migrateExistingBudgets() {
+            const savedBudgets = JSON.parse(localStorage.getItem('savedBudgets') || '{}');
+            let didMigrate = false;
+            
+            // For each saved budget
+            Object.values(savedBudgets).forEach(budget => {
+                if (budget.categories) {
+                    // For each category in the budget
+                    budget.categories.forEach(category => {
+                        // Add type field if it doesn't exist
+                        if (!category.hasOwnProperty('type')) {
+                            category.type = '';
+                            didMigrate = true;
+                        }
+                    });
+                }
+                
+                // Add includePersonal property if it doesn't exist
+                if (!budget.hasOwnProperty('includePersonal')) {
+                    budget.includePersonal = true; // Default to true for existing budgets
+                    didMigrate = true;
+                }
+            });
+            
+            // If any migrations happened, save the updated budgets
+            if (didMigrate) {
+                localStorage.setItem('savedBudgets', JSON.stringify(savedBudgets));
+            }
+        }
+
+        function initializeApp() {
+            // Migrate existing data if needed
+            migrateExistingBudgets();
+            
+            const savedBudgets = JSON.parse(localStorage.getItem('savedBudgets') || '{}');
+            
+            if (savedBudgets[currentBudgetId]) {
+                loadBudgetData(savedBudgets[currentBudgetId]);
+            } else {
+                initializeCategories();
+                document.getElementById('budgetNotes').value = '';
+            }
+            
+            updateSavedBudgetsList();
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>
