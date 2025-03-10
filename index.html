@@ -697,215 +697,139 @@
             color: var(--text-primary);
         }
         
-        .modal-tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border-color);
+        .assumptions-box {
+            background-color: rgba(248, 250, 252, 0.8);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
             margin-bottom: var(--spacing-lg);
         }
         
-        .modal-tab {
-            padding: var(--spacing-sm) var(--spacing-lg);
-            cursor: pointer;
-            position: relative;
-            font-weight: 500;
-            color: var(--text-secondary);
-            transition: all 0.2s ease;
+        .assumptions-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: var(--spacing-sm);
         }
         
-        .modal-tab.active {
-            color: var(--primary-color);
-        }
-        
-        .modal-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background-color: var(--primary-color);
-        }
-        
-        .modal-tab-content {
-            display: none;
-        }
-        
-        .modal-tab-content.active {
-            display: block;
-        }
-        
-        .basic-inputs {
+        .assumptions-list {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
         }
         
-        .input-group {
+        .assumption-item {
             display: flex;
-            flex-direction: column;
-            gap: var(--spacing-sm);
-        }
-        
-        .input-group label {
-            font-weight: 500;
+            align-items: center;
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
         
-        .input-row {
-            display: flex;
-            gap: var(--spacing-md);
-            align-items: center;
-        }
-        
-        .input-row label {
-            flex: 1;
-        }
-        
-        .input-row input {
-            width: 80px;
-        }
-
-        .life-stages {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
-            background-color: rgba(248, 250, 252, 0.8);
-            padding: var(--spacing-lg);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-        }
-        
-        .stage-title {
-            font-weight: 600;
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .stage-description {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .life-stage {
-            display: flex;
-            align-items: center;
-            padding: var(--spacing-sm);
-            border-radius: var(--radius-md);
-            background-color: white;
-            border: 1px solid var(--border-color);
-            transition: all 0.2s ease;
-        }
-        
-        .life-stage:hover {
-            border-color: var(--primary-color);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .stage-icon {
-            width: 40px;
-            height: 40px;
+        .assumption-icon {
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            margin-right: var(--spacing-md);
+            width: 24px;
+            height: 24px;
+            margin-right: var(--spacing-sm);
+            color: var(--primary-color);
         }
         
-        .stage-young {
-            background-color: rgba(96, 165, 250, 0.2);
-            color: var(--color-young);
-        }
-        
-        .stage-family {
-            background-color: rgba(249, 115, 22, 0.2);
-            color: var(--color-family);
-        }
-        
-        .stage-empty {
-            background-color: rgba(139, 92, 246, 0.2);
-            color: var(--color-empty);
-        }
-        
-        .stage-retire {
-            background-color: rgba(236, 72, 153, 0.2);
-            color: var(--color-retire);
-        }
-        
-        .stage-info {
-            flex: 1;
-        }
-        
-        .stage-name {
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-        
-        .stage-years {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-        
-        .stage-slider {
-            width: 120px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .stage-slider-value {
-            font-weight: 500;
-            font-size: 0.9rem;
-            margin-bottom: 2px;
-        }
-        
-        .stage-slider input {
-            width: 100%;
-            -webkit-appearance: none;
-            height: 6px;
-            border-radius: 3px;
-            background: #e2e8f0;
-            outline: none;
-        }
-        
-        .stage-slider input::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            cursor: pointer;
-        }
-        
-        .stage-slider input::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            cursor: pointer;
-            border: none;
-        }
-        
-        .projection-summary {
+        .current-investment {
             background-color: white;
+            padding: var(--spacing-md);
             border-radius: var(--radius-md);
-            padding: var(--spacing-lg);
-            border: 1px solid var(--border-color);
             margin-bottom: var(--spacing-lg);
-        }
-        
-        .summary-title {
-            font-weight: 600;
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
+            border: 1px solid var(--border-color);
             text-align: center;
         }
         
-        .chart-container {
+        .current-investment-label {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .current-investment-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .life-stage-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .timeline {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-bottom: var(--spacing-md);
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            height: 3px;
+            background-color: var(--border-color);
+            z-index: 0;
+        }
+        
+        .timeline-point {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: white;
+            border: 3px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+        
+        .point-family {
+            border-color: var(--color-family);
+            color: var(--color-family);
+        }
+        
+        .point-empty {
+            border-color: var(--color-empty);
+            color: var(--color-empty);
+        }
+        
+        .point-retire {
+            border-color: var(--color-retire);
+            color: var(--color-retire);
+        }
+        
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 16px;
+        }
+        
+        .timeline-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            width: 80px;
+            margin-left: -24px;
+        }
+        
+        .projection-chart {
             width: 100%;
             height: 300px;
             margin-bottom: var(--spacing-lg);
@@ -959,7 +883,7 @@
             display: flex;
             justify-content: center;
             gap: var(--spacing-lg);
-            margin-top: var(--spacing-lg);
+            margin-top: var(--spacing-md);
             flex-wrap: wrap;
         }
         
@@ -1104,12 +1028,15 @@
                 gap: var(--spacing-sm);
             }
             
-            .basic-inputs, 
             .results-cards {
                 grid-template-columns: 1fr;
             }
             
             .key-figures {
+                grid-template-columns: 1fr;
+            }
+            
+            .assumptions-list {
                 grid-template-columns: 1fr;
             }
         }
@@ -1126,19 +1053,14 @@
                 gap: var(--spacing-sm);
             }
             
-            .life-stage {
-                flex-direction: column;
-                text-align: center;
+            .timeline {
+                padding: 0 var(--spacing-sm);
             }
             
-            .stage-icon {
-                margin-right: 0;
-                margin-bottom: var(--spacing-sm);
-            }
-            
-            .stage-slider {
-                width: 100%;
-                margin-top: var(--spacing-sm);
+            .timeline-label {
+                font-size: 0.7rem;
+                width: auto;
+                margin-left: 0;
             }
         }
 
@@ -1312,227 +1234,138 @@
             </div>
             
             <div class="modal-intro">
-                See how your current saving and investment choices affect your financial future. We'll show you when you might be able to retire based on how your investments grow over time.
+                Based on your current monthly investments of <strong>$<span id="currentInvestmentDisplay">800</span></strong>, here's how your financial future could look. We've calculated when you might be able to retire with enough to last until age 90.
             </div>
             
-            <div class="modal-tabs">
-                <div class="modal-tab active" onclick="switchTab('basics')">Basic Settings</div>
-                <div class="modal-tab" onclick="switchTab('lifestages')">Life Stages</div>
-                <div class="modal-tab" onclick="switchTab('results')">Results</div>
+            <div class="assumptions-box">
+                <div class="assumptions-title">Our Assumptions</div>
+                <div class="assumptions-list">
+                    <div class="assumption-item">
+                        <div class="assumption-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                        <span>Conservative return: 4% annually</span>
+                    </div>
+                    <div class="assumption-item">
+                        <div class="assumption-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                        <span>Average return: 7% annually</span>
+                    </div>
+                    <div class="assumption-item">
+                        <div class="assumption-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                        <span>Optimistic return: 10% annually</span>
+                    </div>
+                    <div class="assumption-item">
+                        <div class="assumption-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                        <span>Safe withdrawal rate: 4% annually</span>
+                    </div>
+                    <div class="assumption-item">
+                        <div class="assumption-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                        <span>Current monthly expenses: $<span id="currentExpensesDisplay">4,000</span></span>
+                    </div>
+                    <div class="assumption-item">
+                        <div class="assumption-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                        </div>
+                        <span>Ages: Alex (36), Emma (35)</span>
+                    </div>
+                </div>
             </div>
             
-            <div class="modal-body">
-                <!-- Basic Settings Tab -->
-                <div class="modal-tab-content active" id="basics-tab">
-                    <div class="basic-inputs">
-                        <div class="input-group">
-                            <label>Your Current Ages</label>
-                            <div class="input-row">
-                                <label>Alex's age:</label>
-                                <input type="number" id="alexAge" value="35" min="18" max="100" onchange="calculateProjections()">
-                            </div>
-                            <div class="input-row">
-                                <label>Emma's age:</label>
-                                <input type="number" id="emmaAge" value="33" min="18" max="100" onchange="calculateProjections()">
-                            </div>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Investment Growth</label>
-                            <div class="input-row">
-                                <label>Conservative estimate:</label>
-                                <input type="number" id="safeRate" value="4" min="1" max="15" onchange="calculateProjections()">
-                                <span>%</span>
-                            </div>
-                            <div class="input-row">
-                                <label>Average estimate:</label>
-                                <input type="number" id="typicalRate" value="7" min="1" max="15" onchange="calculateProjections()">
-                                <span>%</span>
-                            </div>
-                            <div class="input-row">
-                                <label>Optimistic estimate:</label>
-                                <input type="number" id="optimisticRate" value="10" min="1" max="15" onchange="calculateProjections()">
-                                <span>%</span>
-                            </div>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Retirement Target</label>
-                            <div class="input-row">
-                                <label>Retirement fund goal:</label>
-                                <input type="number" id="yearsOfExpenses" value="25" min="10" max="50" onchange="calculateProjections()">
-                                <span>× annual expenses</span>
-                            </div>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label>Withdrawals in Retirement</label>
-                            <div class="input-row">
-                                <label>Safe withdrawal rate:</label>
-                                <input type="number" id="withdrawalRate" value="4" min="2" max="6" step="0.1" onchange="calculateProjections()">
-                                <span>% per year</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="key-figures">
-                        <div class="key-figure">
-                            <div class="key-figure-title">Current Monthly Investments</div>
-                            <div class="key-figure-value" id="currentInvestmentDisplay">$800</div>
-                            <div class="key-figure-description">Amount you're currently investing each month</div>
-                        </div>
-                        
-                        <div class="key-figure">
-                            <div class="key-figure-title">Current Monthly Expenses</div>
-                            <div class="key-figure-value" id="currentExpensesDisplay">$4,000</div>
-                            <div class="key-figure-description">Your total monthly shared expenses</div>
-                        </div>
-                    </div>
+            <div class="life-stage-timeline">
+                <div class="timeline-title">Your Life Stages</div>
+                <div class="timeline">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-point point-family">F</div>
+                    <div style="flex: 20"></div>
+                    <div class="timeline-point point-empty">E</div>
+                    <div style="flex: 15"></div>
+                    <div class="timeline-point point-retire">R</div>
+                </div>
+                <div class="timeline-labels">
+                    <div class="timeline-label">Family with Children<br>Now - 2045</div>
+                    <div class="timeline-label" style="margin-left: 40px;">Empty Nest<br>2045 - 2060</div>
+                    <div class="timeline-label" style="margin-left: 34px;">Retirement<br>varies by scenario</div>
+                </div>
+            </div>
+            
+            <div class="projection-chart">
+                <canvas id="growthChart"></canvas>
+            </div>
+            
+            <div class="scenario-info">
+                <div class="scenario-item">
+                    <div class="scenario-color scenario-safe-color"></div>
+                    <span>Conservative (4%)</span>
+                </div>
+                <div class="scenario-item">
+                    <div class="scenario-color scenario-typical-color"></div>
+                    <span>Average (7%)</span>
+                </div>
+                <div class="scenario-item">
+                    <div class="scenario-color scenario-optimistic-color"></div>
+                    <span>Optimistic (10%)</span>
+                </div>
+                <div class="scenario-item">
+                    <div style="width: 12px; height: 2px; background-color: #6b7280; margin-right: 4px;"></div>
+                    <span>Retirement Goal</span>
+                </div>
+            </div>
+            
+            <div class="results-cards">
+                <div class="result-card safe">
+                    <div class="result-title">Conservative Plan</div>
+                    <div class="result-value" id="safeRetirementAge">66</div>
+                    <div class="result-subtitle">Retirement age</div>
                 </div>
                 
-                <!-- Life Stages Tab -->
-                <div class="modal-tab-content" id="lifestages-tab">
-                    <div class="stage-title">How Your Expenses Change Over Time</div>
-                    <div class="stage-description">
-                        Adjust how much your expenses will increase or decrease during different life stages.
-                    </div>
-                    
-                    <div class="life-stages">
-                        <div class="life-stage">
-                            <div class="stage-icon stage-young">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="11" width="18" height="10" rx="2" />
-                                    <circle cx="12" cy="5" r="2" />
-                                    <path d="M12 7v4" />
-                                    <path d="M8 16v-1" />
-                                    <path d="M16 16v-1" />
-                                </svg>
-                            </div>
-                            <div class="stage-info">
-                                <div class="stage-name">Young Adult/Couple</div>
-                                <div class="stage-years">Current stage</div>
-                            </div>
-                            <div class="stage-slider">
-                                <div class="stage-slider-value">No change</div>
-                                <input type="range" min="-50" max="50" value="0" step="5" id="youngAdultSlider" oninput="updateLifeStageSlider(this, 'youngAdult')" onchange="calculateProjections()">
-                            </div>
-                        </div>
-                        
-                        <div class="life-stage">
-                            <div class="stage-icon stage-family">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="5" r="2" />
-                                    <path d="M10 10h4v4" />
-                                    <circle cx="6" cy="13" r="1.5" />
-                                    <circle cx="18" cy="13" r="1.5" />
-                                    <path d="M8 21v-5" />
-                                    <path d="M16 21v-5" />
-                                    <path d="M12 21v-3" />
-                                </svg>
-                            </div>
-                            <div class="stage-info">
-                                <div class="stage-name">Family with Children</div>
-                                <div class="stage-years">Higher expenses for childcare, education, etc.</div>
-                            </div>
-                            <div class="stage-slider">
-                                <div class="stage-slider-value">+30%</div>
-                                <input type="range" min="-50" max="100" value="30" step="5" id="familySlider" oninput="updateLifeStageSlider(this, 'family')" onchange="calculateProjections()">
-                            </div>
-                        </div>
-                        
-                        <div class="life-stage">
-                            <div class="stage-icon stage-empty">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="9" cy="7" r="2" />
-                                    <circle cx="15" cy="7" r="2" />
-                                    <path d="M8 14v-1" />
-                                    <path d="M16 14v-1" />
-                                    <path d="M3 16h18c0 3-3 4-6 4s-6-1-6-4z" />
-                                </svg>
-                            </div>
-                            <div class="stage-info">
-                                <div class="stage-name">Empty Nest</div>
-                                <div class="stage-years">After children are independent</div>
-                            </div>
-                            <div class="stage-slider">
-                                <div class="stage-slider-value">-20%</div>
-                                <input type="range" min="-50" max="100" value="-20" step="5" id="emptyNestSlider" oninput="updateLifeStageSlider(this, 'emptyNest')" onchange="calculateProjections()">
-                            </div>
-                        </div>
-                        
-                        <div class="life-stage">
-                            <div class="stage-icon stage-retire">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                                    <path d="M3 6l9 6 9-6"></path>
-                                    <path d="M3 18h18"></path>
-                                </svg>
-                            </div>
-                            <div class="stage-info">
-                                <div class="stage-name">Retirement</div>
-                                <div class="stage-years">After stopping full-time work</div>
-                            </div>
-                            <div class="stage-slider">
-                                <div class="stage-slider-value">-10%</div>
-                                <input type="range" min="-50" max="100" value="-10" step="5" id="retirementSlider" oninput="updateLifeStageSlider(this, 'retirement')" onchange="calculateProjections()">
-                            </div>
-                        </div>
-                    </div>
+                <div class="result-card typical">
+                    <div class="result-title">Average Plan</div>
+                    <div class="result-value" id="typicalRetirementAge">59</div>
+                    <div class="result-subtitle">Retirement age</div>
                 </div>
                 
-                <!-- Results Tab -->
-                <div class="modal-tab-content" id="results-tab">
-                    <div class="projection-summary">
-                        <div class="summary-title">Your Investment Growth Journey</div>
-                        <div class="chart-container">
-                            <canvas id="growthChart"></canvas>
-                        </div>
-                        
-                        <div class="scenario-info">
-                            <div class="scenario-item">
-                                <div class="scenario-color scenario-safe-color"></div>
-                                <span>Conservative (4%)</span>
-                            </div>
-                            <div class="scenario-item">
-                                <div class="scenario-color scenario-typical-color"></div>
-                                <span>Average (7%)</span>
-                            </div>
-                            <div class="scenario-item">
-                                <div class="scenario-color scenario-optimistic-color"></div>
-                                <span>Optimistic (10%)</span>
-                            </div>
-                            <div class="scenario-item">
-                                <div style="width: 12px; height: 2px; background-color: #6b7280; margin-right: 4px;"></div>
-                                <span>Retirement Goal</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="results-cards">
-                        <div class="result-card safe">
-                            <div class="result-title">Conservative Plan</div>
-                            <div class="result-value" id="safeRetirementAge">66</div>
-                            <div class="result-subtitle">Retirement age</div>
-                        </div>
-                        
-                        <div class="result-card typical">
-                            <div class="result-title">Average Plan</div>
-                            <div class="result-value" id="typicalRetirementAge">59</div>
-                            <div class="result-subtitle">Retirement age</div>
-                        </div>
-                        
-                        <div class="result-card optimistic">
-                            <div class="result-title">Optimistic Plan</div>
-                            <div class="result-value" id="optimisticRetirementAge">54</div>
-                            <div class="result-subtitle">Retirement age</div>
-                        </div>
-                    </div>
-                    
-                    <div class="retirement-info">
-                        <p>With your current budget, <strong>investing $<span id="investmentAmountDisplay">800</span>/month</strong>, you could potentially retire between <strong>ages <span id="earliestRetirementAge">54</span> and <span id="latestRetirementAge">66</span></strong> depending on market performance.</p>
-                        <p>Your estimated monthly income in retirement would be <strong>$<span id="monthlyRetirementIncome">3,333</span></strong> based on your target fund and withdrawal rate.</p>
-                    </div>
+                <div class="result-card optimistic">
+                    <div class="result-title">Optimistic Plan</div>
+                    <div class="result-value" id="optimisticRetirementAge">54</div>
+                    <div class="result-subtitle">Retirement age</div>
                 </div>
+            </div>
+            
+            <div class="retirement-info">
+                <p>With your current investment of <strong>$<span id="investmentAmountDisplay">800</span>/month</strong>, you could potentially retire between <strong>ages <span id="earliestRetirementAge">54</span> and <span id="latestRetirementAge">66</span></strong> depending on market performance.</p>
+                <p>When you retire, your estimated monthly income would be <strong>$<span id="monthlyRetirementIncome">3,333</span></strong> based on your expenses and 4% safe withdrawal rate.</p>
             </div>
             
             <div class="modal-footer">
@@ -1568,6 +1401,28 @@
         let growthChart = null;
         let currentTotalMonthlyExpenses = 0;
         let currentInvestmentAmount = 0;
+        
+        // Hard-coded ages
+        const alexBirthDate = new Date('1988-06-18');
+        const emmaBirthDate = new Date('1989-12-09');
+        
+        // Current date from context
+        const currentDate = new Date('2025-03-10');
+        
+        // Calculate current ages
+        function calculateAge(birthDate, currentDate) {
+            let age = currentDate.getFullYear() - birthDate.getFullYear();
+            const monthDiff = currentDate.getMonth() - birthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            return age;
+        }
+        
+        const alexAge = calculateAge(alexBirthDate, currentDate);
+        const emmaAge = calculateAge(emmaBirthDate, currentDate);
         
         // Create a single category row with drag functionality and editable name
         function createCategoryRow(name, amount, notes = '', type = '') {
@@ -2140,7 +1995,6 @@
         // Future Projections Modal Functions
         function openProjectionsModal() {
             document.getElementById('projectionsModal').classList.add('active');
-            switchTab('basics');
             calculateProjections();
         }
         
@@ -2148,143 +2002,117 @@
             document.getElementById('projectionsModal').classList.remove('active');
         }
         
-        function switchTab(tabName) {
-            // Hide all tab contents
-            document.querySelectorAll('.modal-tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Deactivate all tabs
-            document.querySelectorAll('.modal-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Activate the selected tab and content
-            document.getElementById(tabName + '-tab').classList.add('active');
-            document.querySelector(`.modal-tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
-        }
-        
-        function updateLifeStageSlider(slider, stageName) {
-            const value = slider.value;
-            const displayEl = slider.previousElementSibling;
-            
-            if (value > 0) {
-                displayEl.textContent = `+${value}%`;
-            } else if (value < 0) {
-                displayEl.textContent = `${value}%`;
-            } else {
-                displayEl.textContent = 'No change';
-            }
-        }
-        
         function calculateProjections() {
-            const alexAge = Number(document.getElementById('alexAge').value) || 35;
-            const emmaAge = Number(document.getElementById('emmaAge').value) || 33;
-            const targetPartnerAge = Math.max(alexAge, emmaAge);
+            // Fixed values from requirements
+            const safeRate = 0.04;      // 4%
+            const typicalRate = 0.07;   // 7%
+            const optimisticRate = 0.10; // 10%
+            const withdrawalRate = 0.04; // 4%
             
-            const safeRate = Number(document.getElementById('safeRate').value) / 100 || 0.04;
-            const typicalRate = Number(document.getElementById('typicalRate').value) / 100 || 0.07;
-            const optimisticRate = Number(document.getElementById('optimisticRate').value) / 100 || 0.10;
+            // Life stage transitions (years from now)
+            const emptyNestStartYear = 2045 - 2025; // Empty nest starts in 2045
+            const maxAge = 90; // Plan until age 90
             
-            const withdrawalRate = Number(document.getElementById('withdrawalRate').value) / 100 || 0.04;
-            const yearsOfExpensesTarget = Number(document.getElementById('yearsOfExpenses').value) || 25;
-            
-            // Get life stage expense adjustments
-            const youngAdultAdjustment = Number(document.getElementById('youngAdultSlider').value) / 100 || 0;
-            const familyAdjustment = Number(document.getElementById('familySlider').value) / 100 || 0.3;
-            const emptyNestAdjustment = Number(document.getElementById('emptyNestSlider').value) / 100 || -0.2;
-            const retirementAdjustment = Number(document.getElementById('retirementSlider').value) / 100 || -0.1;
+            // Use older partner's age for retirement calculations
+            const olderPartnerAge = Math.max(alexAge, emmaAge);
+            const yearsToAge90 = maxAge - olderPartnerAge;
             
             // Monthly values to annual
             const annualExpenses = currentTotalMonthlyExpenses * 12;
             const annualInvestmentContribution = currentInvestmentAmount * 12;
             
-            // Target retirement amount
-            const targetAmount = annualExpenses * (1 + retirementAdjustment) * yearsOfExpensesTarget;
+            // Life stage expense adjustments
+            const familyExpenses = annualExpenses; // Current expenses (family stage)
+            const emptyNestExpenses = annualExpenses * 0.8; // 20% less when kids leave
+            const retirementExpenses = emptyNestExpenses * 0.9; // Another 10% less in retirement
             
-            // Projection years
-            const projectionYears = 40;
+            // Calculate target retirement amount to last until age 90
+            // This is calculated to provide enough for retirement expenses until age 90
+            // with a 4% safe withdrawal rate
+            const yearsInRetirement = yearsToAge90;
+            const targetRetirementAmount = (retirementExpenses / withdrawalRate);
             
-            // Calculate growth with life stage adjustments
+            // Calculate growth projections for each scenario
             const safeProjection = calculateGrowthWithLifeStages(
                 annualInvestmentContribution, 
                 safeRate, 
-                projectionYears,
-                targetPartnerAge,
-                [youngAdultAdjustment, familyAdjustment, emptyNestAdjustment]
+                yearsToAge90,
+                emptyNestStartYear,
+                familyExpenses,
+                emptyNestExpenses,
+                retirementExpenses
             );
             
             const typicalProjection = calculateGrowthWithLifeStages(
                 annualInvestmentContribution, 
                 typicalRate, 
-                projectionYears,
-                targetPartnerAge,
-                [youngAdultAdjustment, familyAdjustment, emptyNestAdjustment]
+                yearsToAge90,
+                emptyNestStartYear,
+                familyExpenses,
+                emptyNestExpenses,
+                retirementExpenses
             );
             
             const optimisticProjection = calculateGrowthWithLifeStages(
                 annualInvestmentContribution, 
                 optimisticRate, 
-                projectionYears,
-                targetPartnerAge,
-                [youngAdultAdjustment, familyAdjustment, emptyNestAdjustment]
+                yearsToAge90,
+                emptyNestStartYear,
+                familyExpenses,
+                emptyNestExpenses,
+                retirementExpenses
             );
             
-            // Calculate retirement ages for each scenario
-            const safeRetirementYear = findRetirementYear(safeProjection, targetAmount);
-            const typicalRetirementYear = findRetirementYear(typicalProjection, targetAmount);
-            const optimisticRetirementYear = findRetirementYear(optimisticProjection, targetAmount);
+            // Calculate retirement ages
+            const safeRetirementYear = findRetirementYear(safeProjection, targetRetirementAmount);
+            const typicalRetirementYear = findRetirementYear(typicalProjection, targetRetirementAmount);
+            const optimisticRetirementYear = findRetirementYear(optimisticProjection, targetRetirementAmount);
             
-            const safeRetirementAge = targetPartnerAge + safeRetirementYear;
-            const typicalRetirementAge = targetPartnerAge + typicalRetirementYear;
-            const optimisticRetirementAge = targetPartnerAge + optimisticRetirementYear;
+            const safeRetirementAge = olderPartnerAge + safeRetirementYear;
+            const typicalRetirementAge = olderPartnerAge + typicalRetirementYear;
+            const optimisticRetirementAge = olderPartnerAge + optimisticRetirementYear;
             
             // Update retirement age display
-            document.getElementById('safeRetirementAge').textContent = safeRetirementAge >= 100 ? "100+" : safeRetirementAge;
-            document.getElementById('typicalRetirementAge').textContent = typicalRetirementAge >= 100 ? "100+" : typicalRetirementAge;
-            document.getElementById('optimisticRetirementAge').textContent = optimisticRetirementAge >= 100 ? "100+" : optimisticRetirementAge;
+            document.getElementById('safeRetirementAge').textContent = safeRetirementAge >= 90 ? "90+" : safeRetirementAge;
+            document.getElementById('typicalRetirementAge').textContent = typicalRetirementAge >= 90 ? "90+" : typicalRetirementAge;
+            document.getElementById('optimisticRetirementAge').textContent = optimisticRetirementAge >= 90 ? "90+" : optimisticRetirementAge;
             
             // Update retirement info summary
             document.getElementById('earliestRetirementAge').textContent = 
-                optimisticRetirementAge >= 100 ? typicalRetirementAge : optimisticRetirementAge;
+                optimisticRetirementAge >= 90 ? (typicalRetirementAge >= 90 ? safeRetirementAge : typicalRetirementAge) : optimisticRetirementAge;
             document.getElementById('latestRetirementAge').textContent = 
-                safeRetirementAge >= 100 ? "80+" : safeRetirementAge;
+                safeRetirementAge >= 90 ? "80+" : safeRetirementAge;
             
-            // Calculate retirement income
-            const monthlyRetirementIncome = (targetAmount * withdrawalRate / 12).toFixed(0);
+            // Calculate monthly retirement income
+            const monthlyRetirementIncome = (retirementExpenses * withdrawalRate / 12).toFixed(0);
             document.getElementById('monthlyRetirementIncome').textContent = formatMoney(monthlyRetirementIncome);
             
             // Update the chart
-            updateGrowthChart(safeProjection, typicalProjection, optimisticProjection, targetAmount);
+            updateGrowthChart(safeProjection, typicalProjection, optimisticProjection, targetRetirementAmount);
         }
         
-        function calculateGrowthWithLifeStages(annualContribution, growthRate, years, startAge, adjustments) {
-            // Define age ranges for life stages (these are approximate)
-            const youngAdultEnd = 35; // Young adult stage ends around 35
-            const familyStageEnd = 55; // Family stage ends around 55
-            const emptyNestEnd = 70;  // Empty nest stage ends around 70
-            
+        function calculateGrowthWithLifeStages(annualContribution, growthRate, years, emptyNestStartYear, familyExpenses, emptyNestExpenses, retirementExpenses) {
             let balance = 0;
             const projection = [];
             
             for (let year = 0; year <= years; year++) {
                 projection.push(balance);
                 
-                let currentAge = startAge + year;
+                // When we pass the empty nest year, stop contributing
                 let currentContribution = annualContribution;
+                let currentExpenses;
                 
-                // Adjust contribution based on life stage
-                if (currentAge < youngAdultEnd) {
-                    // Young adult stage
-                    currentContribution = annualContribution * (1 + adjustments[0]);
-                } else if (currentAge < familyStageEnd) {
-                    // Family stage
-                    currentContribution = annualContribution * (1 + adjustments[1]);
-                } else if (currentAge < emptyNestEnd) {
-                    // Empty nest stage
-                    currentContribution = annualContribution * (1 + adjustments[2]);
+                if (year < emptyNestStartYear) {
+                    // Family with children stage
+                    currentExpenses = familyExpenses;
                 } else {
-                    // Retirement stage - no more contributions
+                    // Empty nest stage
+                    currentExpenses = emptyNestExpenses;
+                }
+                
+                // Check if we've reached financial independence
+                if (balance * withdrawalRate >= retirementExpenses) {
+                    // In retirement - no more contributions, and start withdrawing
                     currentContribution = 0;
                 }
                 
@@ -2307,15 +2135,17 @@
             const ctx = document.getElementById('growthChart').getContext('2d');
             
             // Prepare labels (years)
-            const labels = Array.from({length: Math.min(40, safeProjection.length)}, (_, i) => `Year ${i}`);
+            const maxYears = 50; // Maximum years to show on chart
+            const displayYears = Math.min(maxYears, safeProjection.length);
+            const labels = Array.from({length: displayYears}, (_, i) => `Year ${i}`);
             
             // Limit data points for cleaner display
-            const limitedSafe = safeProjection.slice(0, 40);
-            const limitedTypical = typicalProjection.slice(0, 40);
-            const limitedOptimistic = optimisticProjection.slice(0, 40);
+            const limitedSafe = safeProjection.slice(0, displayYears);
+            const limitedTypical = typicalProjection.slice(0, displayYears);
+            const limitedOptimistic = optimisticProjection.slice(0, displayYears);
             
             // Add target line
-            const targetLine = Array(40).fill(targetAmount);
+            const targetLine = Array(displayYears).fill(targetAmount);
             
             // Destroy existing chart if it exists
             if (growthChart) {
@@ -2329,21 +2159,21 @@
                     labels: labels,
                     datasets: [
                         {
-                            label: 'Conservative Plan',
+                            label: 'Conservative Plan (4%)',
                             data: limitedSafe,
                             borderColor: 'rgb(239, 68, 68)',
                             backgroundColor: 'rgba(239, 68, 68, 0.1)',
                             tension: 0.1
                         },
                         {
-                            label: 'Average Plan',
+                            label: 'Average Plan (7%)',
                             data: limitedTypical,
                             borderColor: 'rgb(16, 185, 129)',
                             backgroundColor: 'rgba(16, 185, 129, 0.1)',
                             tension: 0.1
                         },
                         {
-                            label: 'Optimistic Plan',
+                            label: 'Optimistic Plan (10%)',
                             data: limitedOptimistic,
                             borderColor: 'rgb(59, 130, 246)',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -2368,8 +2198,6 @@
                             beginAtZero: true,
                             ticks: {
                                 callback: function(value) {
-                                
-
                                     if (value >= 1000000) {
                                         return '$' + (value / 1000000).toFixed(1) + 'M';
                                     } else if (value >= 1000) {
