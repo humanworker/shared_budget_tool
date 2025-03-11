@@ -1291,6 +1291,10 @@
             </div>
             
             <div class="modal-body">
+                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 10px;">
+                    <strong>Note:</strong> All projections are shown in today's dollars (inflation-adjusted), 
+                    so the numbers represent actual purchasing power.
+                  </div>
                 <div class="modal-intro">
                     Based on your current monthly investments of <strong>$<span id="currentInvestmentDisplay">800</span></strong>, here's how your financial future could look. We've calculated when you might be able to retire with enough to last until age 90.
                 </div>
@@ -1306,7 +1310,7 @@
                                     <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                 </svg>
                             </div>
-                            <span>Conservative return: 4% annually</span>
+                            <span>Conservative real return: 1% annually (after inflation)</span>
                         </div>
                         <div class="assumption-item">
                             <div class="assumption-icon">
@@ -1316,7 +1320,7 @@
                                     <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                 </svg>
                             </div>
-                            <span>Average return: 7% annually</span>
+                            <span>Average real return: 4% annually (after inflation)</span>
                         </div>
                         <div class="assumption-item">
                             <div class="assumption-icon">
@@ -1326,7 +1330,7 @@
                                     <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                 </svg>
                             </div>
-                            <span>Optimistic return: 10% annually</span>
+                            <span>Optimistic real return: 7% annually (after inflation)</span>
                         </div>
                         <div class="assumption-item">
                             <div class="assumption-icon">
@@ -2110,10 +2114,12 @@
         
         function calculateProjections() {
             // Fixed values from requirements
-            const safeRate = 0.04;      // 4%
-            const typicalRate = 0.07;   // 7%
-            const optimisticRate = 0.10; // 10%
+         // Replace with real (inflation-adjusted) rates
+const safeRate = 0.01;      // 1% real return (4% nominal minus ~3% inflation)
+const typicalRate = 0.04;   // 4% real return (7% nominal minus ~3% inflation)
+const optimisticRate = 0.07; // 7% real return (10% nominal minus ~3% inflation)
             const withdrawalRate = 0.04; // 4%
+            const inflationRate = 0.03; // 3% assumed inflation
             
             // Get user configured expense percentages (if the sliders exist)
             const emptyNestExpensePercent = document.getElementById('emptyNestExpenseSlider') 
